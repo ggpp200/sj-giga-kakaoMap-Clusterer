@@ -18,7 +18,7 @@ export default {
 			} else {
 				const script = document.createElement("script")
 				script.onload = () => kakao.maps.load(initMap)
-				script.src ="//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=44e203a985e2bc845fbbde8390a4fc5b&libraries=clusterer";
+				script.src ="이건 비밀이였어!";
 				document.head.appendChild(script)
 			}
 		})
