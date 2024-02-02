@@ -6,6 +6,7 @@
 <script>
 import { onMounted } from 'vue'
 import { useKakaoStore } from '@/stores/kakao.js'
+import markImage from '@/assets/marker.png'
 import $ from 'jquery'
 export default {
 	setup() {
@@ -18,7 +19,8 @@ export default {
 			} else {
 				const script = document.createElement("script")
 				script.onload = () => kakao.maps.load(initMap)
-				script.src ="이건 비밀이였어!";
+				script.src ="key를 넣어주세요";
+				script.type = "text/javascript"
 				document.head.appendChild(script)
 			}
 		})
@@ -38,14 +40,22 @@ export default {
 				disableClickZoom: true // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
 				
 			})
+
+
+
+			// 저장해둔 마커 위치 불러와서 마커 붙이기
 			var markers = $(store.s_markers_info).map(function(i,item) {
+						var imageSrc = markImage, // 마커이미지의 주소입니다    
+								imageSize = new kakao.maps.Size(30, 39), // 마커이미지의 크기입니다
+								imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
             return new kakao.maps.Marker({
-                position : new kakao.maps.LatLng(item[1], item[2])
+                position : new kakao.maps.LatLng(item[1], item[2]),
+								image : new kakao.maps.MarkerImage(imageSrc,imageSize,imageOption)
             });
         });
 			clusterer.addMarkers(markers);
 			
-
+			
 
 			// 마커 클러스터러에 클릭이벤트를 등록합니다
 			// 마커 클러스터러를 생성할 때 disableClickZoom을 true로 설정하지 않은 경우
@@ -60,6 +70,7 @@ export default {
 
 			});
 		}
+		
 		return {
 		}
 	}
